@@ -15,7 +15,6 @@ class ApplicationsController < ApplicationController
     if app.save
       redirect_to "/applications/#{app.id}"
     else
-      # require 'pry'; binding.pry
       flash[:notice] = "Problems with your application: #{app.errors.full_messages.to_sentence}"
       render :new
     end
@@ -36,9 +35,9 @@ class ApplicationsController < ApplicationController
     application.save
   end
 
-  def edit
-    @application = Application.find(params[:id])
-  end
+  # def edit
+  #   @application = Application.find(params[:id])
+  # end
 
   private
   def application_params

@@ -72,15 +72,16 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.order_alpha).to eq([@shelter_2,@shelter_3,@shelter_1])
       end
     end
+
     describe "#get_name_city" do
-      xit "gets name" do
-        expect(Shelter.get_name("#{@shelter_2.id}")).to eq(name: "RGV animal shelter")
+      it "gets name" do
+        expect(Shelter.get_name("#{@shelter_2.id}")).to eq("RGV animal shelter")
       end
     end
     #not sure why the above and below tests fail
 
-    xit 'gets city' do
-      expect(Shelter.get_city("#{@shelter_2.id}")).to eq([city: "Harlingen, TX"])
+    it 'gets city' do
+      expect(Shelter.get_city("#{@shelter_2.id}")).to eq("Harlingen, TX")
     end
   end
   

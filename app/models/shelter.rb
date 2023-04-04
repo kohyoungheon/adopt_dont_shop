@@ -42,10 +42,10 @@ class Shelter < ApplicationRecord
   end
 
   def self.get_name(id)
-    Shelter.find_by_sql("SELECT name FROM shelters WHERE id = #{id}")
+    Shelter.find_by_sql("SELECT name AS name FROM shelters WHERE id = #{id}").first.name
   end
 
   def self.get_city(id)
-    Shelter.find_by_sql("SELECT city FROM shelters WHERE id = #{id}")
+    Shelter.find_by_sql("SELECT city AS city FROM shelters WHERE id = #{id}").first.city
   end
 end

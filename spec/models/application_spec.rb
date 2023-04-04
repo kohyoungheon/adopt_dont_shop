@@ -95,11 +95,11 @@ RSpec.describe Application, type: :model do
   end
 
   describe "class methods" do
-    describe "::only_pending" do
-      it "returns applications that are pending only" do
-        expect(Application.only_pending.first).to eq(@application_3)
-      end
-    end
+    # describe "::only_pending" do
+    #   it "returns applications that are pending only" do
+    #     expect(Application.only_pending.first).to eq(@application_3)
+    #   end
+    # end
   end
 
 end

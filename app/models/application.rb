@@ -33,7 +33,7 @@ class Application < ApplicationRecord
   end
 
 
-  def self.only_pending
-    where(status: "Pending")
-  end
+  # def self.only_pending
+  #   where(status: "Pending")
+  # end
 end
