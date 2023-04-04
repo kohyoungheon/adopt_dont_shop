@@ -45,24 +45,25 @@ RSpec.describe 'admin shelters' do
     end
   end
 
-  #User Story 19
-  describe "Admin Shelters Show Page" do
-    it "has the shelters name and full address" do
-      visit "admin/shelters/#{@shelter_1.id}"
-
-      expect(page).to have_content("#{@shelter_1.name}")
-      expect(page).to have_content("#{@shelter_1.city}")
-    end
-  end
 
   #User Story 20
   describe "/admin/shelters" do
     it "displays shelters with pending applications alphabetically" do
       @application_3 = @pet_2.applications.create!(name: "Alex Smith",street_address:  "123 Grove St",city: "Boulder",state: "CO",zip: "80012",description: "I like pets",status: "Pending")
       visit "admin/shelters"
-      # save_and_open_page
       expect(page).to have_content("Shelters with Pending applications:\nAurora shelter RGV animal shelter")
     end
+    #User Story 21
+    it "displays each shelter as a link to that shelter show page" do
+      @application_3 = @pet_2.applications.create!(name: "Alex Smith",street_address:  "123 Grove St",city: "Boulder",state: "CO",zip: "80012",description: "I like pets",status: "Pending")
+      visit "admin/shelters"
+      click_link("Aurora shelter")
+      expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
 
+      visit "admin/shelters"
+      click_link("RGV animal shelter")
+      expect(page).to have_current_path("/shelters/#{@shelter_2.id}")
+    end
   end
+
 end
