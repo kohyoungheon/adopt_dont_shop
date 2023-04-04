@@ -29,11 +29,6 @@ class AdminController < ApplicationController
     @all_application_pets = ApplicationPet.findall(@application.pets,@application)
     @application.update_status(@all_application_pets)
     redirect_to "/admin/applications/#{@application.id}"
-
-  end
-
-  def 
-    
   end
 
 end

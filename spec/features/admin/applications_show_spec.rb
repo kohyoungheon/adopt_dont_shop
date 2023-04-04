@@ -115,7 +115,7 @@ RSpec.describe 'admin/applications/:id' do
   end
 
   #User Story 16 
-  describe "One or more pets rejected on an Application"
+  describe "One or more pets rejected on an Application" do
     it "Changes to rejected when first pet is rejected" do
       visit "/admin/applications/#{@application_1.id}"
       expect(page).to have_content("App Status: Pending")
@@ -135,32 +135,32 @@ RSpec.describe 'admin/applications/:id' do
       click_button("Reject Mr. Pirate")
       expect(page).to have_content("App Status: Rejected")
     end
+  end
+  #User Story 17
+  describe "Application Approval makes pets not adoptable" do
+    it 'approves all the pets' do
+    visit "/admin/applications/#{@application_1.id}"
+    expect(page).to have_content("App Status: Pending")
+    click_button("Approve Bare-y Manilow")
+    click_button("Approve Mr. Pirate")
 
-    #User Story 17
-    describe "Application Approval makes pets not adoptable" do
-      it 'approves all the pets' do
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to have_content("Adoptable: false")
+    end
+  end
+
+  #User Story 18
+  describe "Pets can only have one approved application on them at any time" do
+    it "removes the approve button from admin when other app approved" do
       visit "/admin/applications/#{@application_1.id}"
       expect(page).to have_content("App Status: Pending")
       click_button("Approve Bare-y Manilow")
       click_button("Approve Mr. Pirate")
 
-      visit "/pets/#{@pet_1.id}"
-      expect(page).to have_content("Adoptable: false")
-      end
+      visit "/admin/applications/#{@application_2.id}"
+
+      expect(page).not_to have_content("Approve")
+      expect(page).to have_content("IS ALREADY ADOPTED")
     end
-
-    #User Story 18
-    describe "Pets can only have one approved application on them at any time" do
-      it "removes the approve button from admin when other app approved" do
-        visit "/admin/applications/#{@application_1.id}"
-        expect(page).to have_content("App Status: Pending")
-        click_button("Approve Bare-y Manilow")
-        click_button("Approve Mr. Pirate")
-
-        visit "/admin/applications/#{@application_2.id}"
-
-        expect(page).not_to have_content("Approve")
-        expect(page).to have_content("IS ALREADY ADOPTED")
-      end
-    end
+  end
 end

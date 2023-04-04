@@ -5,7 +5,7 @@ class Application < ApplicationRecord
   validates :street_address, presence: true
   validates :city, presence: true
   validates :state, presence: true
-  validates :zip, presence: true
+  validates :zip, presence: true, numericality: true
   validates :description, presence: true
   
   def change_status_to_pending
@@ -20,11 +20,11 @@ class Application < ApplicationRecord
       application.update(status: "In Progress")
     else
       application.update(status: "Approved!")
-      confirm_adoptable(application_pets)
+      Application.confirm_adoptable(application_pets)
     end
   end
 
-  def confirm_adoptable(application_pets)
+  def self.confirm_adoptable(application_pets)
     application_pets.each do |ap|
       pet = Pet.find(ap.pet_id)
       pet.update_adoptable

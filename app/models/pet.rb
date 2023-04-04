@@ -1,4 +1,5 @@
 class Pet < ApplicationRecord
+  # attr_accessible :adoptable
   validates :name, presence: true
   validates :age, presence: true, numericality: true
   belongs_to :shelter
@@ -19,5 +20,7 @@ class Pet < ApplicationRecord
 
   def update_adoptable
     self.adoptable = false
+    self.save
   end
+
 end

@@ -15,7 +15,8 @@ class ApplicationsController < ApplicationController
     if app.save
       redirect_to "/applications/#{app.id}"
     else
-      flash[:notice] = "Application not created: Required information missing."
+      # require 'pry'; binding.pry
+      flash[:notice] = "Problems with your application: #{app.errors.full_messages.to_sentence}"
       render :new
     end
   end
