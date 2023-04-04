@@ -120,7 +120,8 @@ RSpec.describe 'the pets index' do
       fill_in(:zip, :with => '80005')
       fill_in(:description, :with => 'I am the best pet owner')
       click_on("Create Application")
-      # expect(page).to have_current_path("/applications/:id")
+      id = Application.last.id
+      expect(page).to have_current_path("/applications/#{id}")
     end
     it "displays submitted info with an 'In Progress' indicator" do
       visit "/applications/new"
@@ -131,7 +132,8 @@ RSpec.describe 'the pets index' do
       fill_in(:zip, :with => '80005')
       fill_in(:description, :with => 'I am the best pet owner')
       click_on("Create Application")
-      # expect(page).to have_current_path("/applications/:id")
+      id = Application.last.id
+      expect(page).to have_current_path("/applications/#{id}")
       expect(page).to have_content("Name: John")
       expect(page).to have_content("Address: 1234 F. Street")
       expect(page).to have_content("App Status: In Progress")
