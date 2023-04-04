@@ -17,6 +17,7 @@ RSpec.describe ApplicationPet, type: :model do
       status: "Pending"
   )
     @app_pet_1 = ApplicationPet.create!(pet: @pet_1, application: @application_1)
+    @app_pet_2 = ApplicationPet.create!(pet: @pet_2, application: @application_1)
   end
 
   describe 'relationships' do
@@ -45,8 +46,11 @@ RSpec.describe ApplicationPet, type: :model do
     end
 
     describe "::find_application" do
-      xit "finds the application_pet records that match with pet and application" do
-        
+      it "finds the application_pet records that match with pet and application" do
+        test_1 = ApplicationPet.find_application(@pet_1,@application_1)
+        test_2 = ApplicationPet.find_application(@pet_2,@application_1)
+        expect(test_1.first).to eq(@app_pet_1)
+        expect(test_2.first).to eq(@app_pet_2)
       end
     end
 
