@@ -9,6 +9,7 @@ RSpec.describe 'admin shelters' do
     @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_1 = @shelter_1.pets.create(adoptable: true, age: 1, breed: 'sphynx', name: 'Bare-y Manilow')
+    @pet_2 = @shelter_2.pets.create(adoptable: true, age: 1, breed: 'sphynx', name: 'George')
     @application_1 = @pet_1.applications.create(
       name: "Billy Mays",
       street_address:  "123 Main St",
@@ -31,7 +32,8 @@ RSpec.describe 'admin shelters' do
 
   it 'shows shelters with pending applications' do
     visit '/admin/shelters' 
-    expect(page).to have_content("#{@shelter_1.name}")
+    
+    expect(page).to have_content("Shelters with Pending applications:\n#{@shelter_1.name}")
   end
 
   #User Story 10
@@ -51,5 +53,16 @@ RSpec.describe 'admin shelters' do
       expect(page).to have_content("#{@shelter_1.name}")
       expect(page).to have_content("#{@shelter_1.city}")
     end
+  end
+
+  #User Story 20
+  describe "/admin/shelters" do
+    it "displays shelters with pending applications alphabetically" do
+      @application_3 = @pet_2.applications.create!(name: "Alex Smith",street_address:  "123 Grove St",city: "Boulder",state: "CO",zip: "80012",description: "I like pets",status: "Pending")
+      visit "admin/shelters"
+      # save_and_open_page
+      expect(page).to have_content("Shelters with Pending applications:\nAurora shelter RGV animal shelter")
+    end
+
   end
 end

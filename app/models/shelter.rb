@@ -38,7 +38,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.join_application_pending
-    joins(pets: :applications).where("status = 'Pending'").pluck("name")
+    joins(pets: :applications).where("status = 'Pending'").order("name").pluck("name")
   end
 
   def self.get_name(id)
