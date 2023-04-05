@@ -93,7 +93,7 @@ RSpec.describe 'admin shelters' do
       expect(page).to have_content("Aurora shelter Fancy pets of Colorado RGV animal shelter")
     end
   end
-end
+
 
     #User Story 21
     it "displays each shelter as a link to that shelter show page" do
@@ -106,7 +106,7 @@ end
       click_link("RGV animal shelter")
       expect(page).to have_current_path("/shelters/#{@shelter_2.id}")
     end
-  end
+  
 
 
 end

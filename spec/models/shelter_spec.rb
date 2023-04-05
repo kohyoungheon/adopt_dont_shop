@@ -62,9 +62,19 @@ RSpec.describe Shelter, type: :model do
       end
     end
 
-    describe "#join_applicaiton_pending" do
+    describe "#join_application_pending" do
       it 'joins on pending app and plucks shelter name' do
-        expect(Shelter.join_application_pending.first.name).to eq("#{@shelter_3.name}")
+        application_3 = @pet_1.applications.create(
+          name: "Gwen Stefani",
+          street_address:  "125 Main St",
+          city: "Aurora",
+          state: "CO",
+          zip: "80012",
+          description: "I like pets even more",
+          status: "Pending"
+        )
+        expect(Shelter.join_application_pending.pluck(:name)).to eq(["Aurora shelter", "Fancy pets of Colorado"])
+
       end
     end
 
