@@ -38,7 +38,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.join_application_pending
-    joins(pets: :applications).where("status = 'Pending'").order("name")
+    distinct.joins(pets: :applications).where("status = 'Pending'").order(:name).pluck("name")
   end
 
   def self.get_name(id)
@@ -48,4 +48,8 @@ class Shelter < ApplicationRecord
   def self.get_city(id)
     Shelter.find_by_sql("SELECT city AS city FROM shelters WHERE id = #{id}").first.city
   end
+
+  # def self.sort_alphabetically
+  #   Shelter.order(:)
+  # end
 end
