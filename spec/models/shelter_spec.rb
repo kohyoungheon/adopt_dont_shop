@@ -140,5 +140,13 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_3.adopted_pet_count).to eq(0)
       end
     end
+
+    describe '.app_pets_pending' do
+      it 'returns app_pets where approved is nil' do
+        expect(@shelter_3.app_pets_pending.count).to eq(1)
+        expect(@shelter_1.app_pets_pending.count).to eq(1)
+        expect(@shelter_2.app_pets_pending.count).to eq(0)
+      end
+    end
   end
 end

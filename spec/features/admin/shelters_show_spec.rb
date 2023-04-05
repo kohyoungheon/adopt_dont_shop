@@ -89,7 +89,7 @@ RSpec.describe 'admin shelters' do
       expect(page).to have_content("Action Required")
     end
 
-    xit 'has a list of all pets for this shelter that have a pending application' do
+    it 'has a list of all pets for this shelter that have a pending application' do
       visit "admin/shelters/#{@shelter_1.id}"
       
       expect(page).to have_content("Bare-y Manilow")
