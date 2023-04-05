@@ -1,3 +1,4 @@
+require 'spec_helper'
 RSpec.describe 'admin shelters' do
   before(:each) do
     @shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
@@ -82,7 +83,7 @@ RSpec.describe 'admin shelters' do
     end
 
     #User Story 25
-    xit 'has action required section' do
+    it 'has action required section' do
       visit "admin/shelters/#{@shelter_1.id}"
       
       expect(page).to have_content("Action Required")
