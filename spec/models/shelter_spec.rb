@@ -22,6 +22,7 @@ RSpec.describe Shelter, type: :model do
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
+    @pet_5 = @shelter_3.pets.create(name: 'Ann', breed: 'ragdoll', age: 2, adoptable: true)
     @application_1 = @pet_1.applications.create(
       name: "Billy Mays",
       street_address:  "123 Main St",
@@ -63,7 +64,7 @@ RSpec.describe Shelter, type: :model do
 
     describe "#join_applicaiton_pending" do
       it 'joins on pending app and plucks shelter name' do
-        expect(Shelter.join_application_pending).to eq(["#{@shelter_3.name}"])
+        expect(Shelter.join_application_pending.first.name).to eq("#{@shelter_3.name}")
       end
     end
 
@@ -78,7 +79,6 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.get_name("#{@shelter_2.id}")).to eq("RGV animal shelter")
       end
     end
-    #not sure why the above and below tests fail
 
     it 'gets city' do
       expect(Shelter.get_city("#{@shelter_2.id}")).to eq("Harlingen, TX")
@@ -107,6 +107,27 @@ RSpec.describe Shelter, type: :model do
     describe '.pet_count' do
       it 'returns the number of pets at the given shelter' do
         expect(@shelter_1.pet_count).to eq(3)
+      end
+    end
+
+    describe '.find_avg_age' do
+      it 'returns average age of pets at shelter' do
+        expect(@shelter_1.find_avg_age).to eq(4)
+        expect(@shelter_3.find_avg_age).to eq(5)
+      end
+    end
+
+    describe '.adoptable_pet_count' do
+      it 'returns a count of adoptable pets at shelter' do
+        expect(@shelter_1.adoptable_pet_count).to eq(2)
+        expect(@shelter_3.adoptable_pet_count).to eq(2)
+      end
+    end
+
+    describe '.adopted_pet_count' do
+      it 'returns a count of adopted pets from shelter' do
+        expect(@shelter_1.adopted_pet_count).to eq(1)
+        expect(@shelter_3.adopted_pet_count).to eq(0)
       end
     end
   end

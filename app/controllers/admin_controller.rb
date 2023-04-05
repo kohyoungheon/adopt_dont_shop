@@ -7,6 +7,10 @@ class AdminController < ApplicationController
   def shelters_show
     @shelter = Shelter.find(params[:id])
     @shelters = Shelter.all
+
+    @average_age = @shelter.find_avg_age
+    @adoptable_pets = @shelter.adoptable_pet_count
+    @adopted_pets = @shelter.adopted_pet_count
   end
 
   def applications_show
