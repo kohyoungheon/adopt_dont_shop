@@ -1,8 +1,12 @@
+<div id ="admin-shelter-info">
 <%= @shelters.get_name(@shelter.id)%>
 <%= @shelters.get_city(@shelter.id)%>
+</div>
+<div id="admin-shelter-stats">
 <h3>Statistics:</h3>
 <ul>
 <li>Average age of adoptable pets: <%= @average_age %></li>
 <li>Count of adoptable pets: <%= @adoptable_pets %></li>
 <li>Count of pets that have been adopted: <%= @adopted_pets %></li>
 </ul>
+</div>

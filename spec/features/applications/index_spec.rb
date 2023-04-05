@@ -44,7 +44,9 @@ RSpec.describe "Application index" do
   describe "/applications" do
     it "displays a link to each application" do
       visit "/applications"
-      expect(page).to have_content("All Applications (Ease of Access)\n#{@application_1.id} #{@application_2.id} #{@application_3.id} #{@application_4.id}")
+      within("#app-index") do
+        expect(page).to have_content("All Applications (Ease of Access)\n#{@application_1.id} #{@application_2.id} #{@application_3.id} #{@application_4.id}")
+      end
     end
   end
 end

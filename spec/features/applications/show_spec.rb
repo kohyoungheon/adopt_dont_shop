@@ -81,19 +81,19 @@ RSpec.describe 'the application show' do
 
   it "doesn't have submit button" do
     visit "/applications/#{@application_5.id}"
-
-    expect(page).not_to have_button("Submit Application")
+    within ("#app-show") do
+      expect(page).not_to have_button("Submit Application")
+    end
   end
 
   it 'has a submit button and submits application' do
     visit "/applications/#{@application_1.id}"
     
-    expect(page).to have_button("Submit Application")
-
-    fill_in 'description', with: "Because, obviously"
-
-    click_button "Submit Application"
-
+    within ("#app-show") do
+      expect(page).to have_button("Submit Application")
+      fill_in 'description', with: "Because, obviously"
+      click_button "Submit Application"
+    end
     expect(page).to have_current_path("/applications/#{@application_1.id}")
     expect(page).to have_content("Pending")
   end
@@ -104,27 +104,34 @@ RSpec.describe 'the application show' do
 
     it "displays a section to add a pet if application has not been submitted" do
       visit "/applications/#{@application_4.id}"
-      expect(page).to have_content("Add a Pet to this Application")
-
-      visit "/applications/#{@application_3.id}"
+      within("#app-show-pets") do
+        expect(page).to have_content("Add a Pet to this Application")
+      end
+      within("#app-show-pets") do
+        visit "/applications/#{@application_3.id}"
+      end
       expect(page).to_not have_content("Add a Pet to this Application")
     end
 
     it "displays an input to search for pets by name" do
       visit "/applications/#{@application_4.id}"
-      expect(page).to have_content("Add a Pet to this Application")
-      expect(page).to have_field(:Name)
-      expect(page).to have_selector(:button, "Search")
+      within("#app-show-pets") do
+        expect(page).to have_content("Add a Pet to this Application")
+        expect(page).to have_field(:Name)
+        expect(page).to have_selector(:button, "Search")
+      end
     end
     it "filling and submitting search redirects to /applications/:id and displays results" do
       visit "/applications/#{@application_4.id}"
-      fill_in(:Name, :with => 'Lobster')
-      click_on("Search")
-      expect(page).to have_content("Add a Pet to this Application")
-      expect(page).to have_content("Adoptable: true")
-      expect(page).to have_content("Age: 3")
-      expect(page).to have_content("Breed: doberman")
-      expect(page).to have_content("Name: Lobster")
+      within("#app-show-pets") do
+        fill_in(:Name, :with => 'Lobster')
+        click_on("Search")
+        expect(page).to have_content("Add a Pet to this Application")
+        expect(page).to have_content("Adoptable: true")
+        expect(page).to have_content("Age: 3")
+        expect(page).to have_content("Breed: doberman")
+        expect(page).to have_content("Name: Lobster")
+      end
     end
   end
 
@@ -132,22 +139,26 @@ RSpec.describe 'the application show' do
   describe "When i visit /applications/:id" do
     it "displays pets that match search and a button 'Adopt this Pet'" do
       visit "/applications/#{@application_4.id}"
-      fill_in(:Name, :with => 'Lobster')
-      click_on("Search")
-      expect(page).to have_content("Add a Pet to this Application")
-      expect(page).to have_content("Adoptable: true")
-      expect(page).to have_content("Age: 3")
-      expect(page).to have_content("Breed: doberman")
-      expect(page).to have_content("Name: Lobster")
-      expect(page).to have_selector(:button, "Adopt this Pet")
+      within("#app-show-pets") do
+        fill_in(:Name, :with => 'Lobster')
+        click_on("Search")
+        expect(page).to have_content("Add a Pet to this Application")
+        expect(page).to have_content("Adoptable: true")
+        expect(page).to have_content("Age: 3")
+        expect(page).to have_content("Breed: doberman")
+        expect(page).to have_content("Name: Lobster")
+        expect(page).to have_selector(:button, "Adopt this Pet")
+      end
     end
 
     it "clicking takes me back to /applications/:id with pet listed on application" do
       visit "/applications/#{@application_4.id}"
-      fill_in(:Name, :with => 'Lobster')
-      click_on("Search")
-      click_on("Adopt this Pet")
-      expect(page).to have_current_path("/applications/#{@application_4.id}")
+      within("#app-show-pets") do
+        fill_in(:Name, :with => 'Lobster')
+        click_on("Search")
+        click_on("Adopt this Pet")
+        expect(page).to have_current_path("/applications/#{@application_4.id}")
+      end
       expect(page).to have_content("Pets: Lobster")
       expect(page).to have_content("App Status: In Progress")
     end

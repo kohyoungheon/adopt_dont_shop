@@ -1,6 +1,6 @@
 <h1><%= @application.name %>'s Application</h1>
 
-<ul>
+<ul id ="app-show">
   <li>Name: <%= @application.name %></li>
   <li>Address: <%= @application.street_address%>, <%= @application.city%> 
   <%=@application.state%> <%=@application.zip%></li>
@@ -21,13 +21,14 @@ Why would you make a good owner for these pet(s)
 <% end %>
 
 </ul>
-
+<div id="app-show-pets">
 <% if @application.status == "In Progress" %>
   <%= render partial: '/partials/search_form', locals: {path: "/applications/#{@application.id}/?name=", method: :get, button_text: 'Search'} %>
     <% if params[:name] %>
     <%= render partial: '/partials/adopt_form' %>
     <% end %>
 <% end %>
+</div>
 
 
 

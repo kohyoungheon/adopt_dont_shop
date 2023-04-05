@@ -1,3 +1,4 @@
+<div id ="pet-index">
 <h1>All pets</h1>
 
 <%= form_with url: "/pets", method: :get, local: true do |f| %>
@@ -5,9 +6,9 @@
   <%= f.text_field :search %>
   <%= f.submit "Search" %>
 <% end %>
-
 <%= button_to 'Start an Application', "/applications/new", method: :get %>
-
+</div>
+<div id ="pet-index-pets">
 <% @pets.each do |pet| %>
   <h3><%= pet.name %></h3>
   <p>Age: <%= pet.age %></p>
@@ -17,3 +18,4 @@
   <%= link_to "Edit #{pet.name}", "/pets/#{pet.id}/edit" %>
   <%= link_to "Delete #{pet.name}", "/pets/#{pet.id}", method: :delete %>
 <% end %>
+</div>
