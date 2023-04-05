@@ -87,7 +87,7 @@ RSpec.describe 'admin shelters' do
   describe "Admin Shelters Show Page" do
     it 'lists shelters alphabetically and distinctly' do
       visit "/admin/shelters"
-      save_and_open_page
+      
       expect(page).to have_content("Aurora shelter Fancy pets of Colorado RGV animal shelter")
     end
   end
