@@ -54,6 +54,12 @@ RSpec.describe ApplicationPet, type: :model do
       end
     end
 
+    describe "::pending_by_shelter" do
+      it 'finds pets by shelter' do
+        expect(ApplicationPet.pending_by_shelter(@shelter_1.id).count).to eq(2)
+      end
+    end
+
   end
 
 end
