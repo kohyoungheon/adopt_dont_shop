@@ -6,6 +6,10 @@ class ApplicationsController < ApplicationController
     @pet_filtered = Pet.filter_by_name(params,@application)
   end
 
+  def index
+    @applications = Application.all
+  end
+
   def new
     
   end
