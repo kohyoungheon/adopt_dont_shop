@@ -21,7 +21,7 @@ RSpec.describe "Filling out forms" do
     visit "/applications/new"
     fill_in "name", with: "Jimbo"
     click_button "Create Application"
-    expect(page).to have_content("Application not created: Required information missing.")
+    expect(page).to have_content("Problems with your application:")
     expect(page).to have_current_path("/applications")
     expect(page).to have_field(:name)
     expect(page).to have_field(:street_address)

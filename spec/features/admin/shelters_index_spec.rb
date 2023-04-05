@@ -12,6 +12,7 @@ RSpec.describe 'admin shelters' do
     @pet_2 = @shelter_2.pets.create(adoptable: true, age: 55, breed: 'Jimmy', name: 'Rainey St Killer')
     @pet_3 = @shelter_3.pets.create(adoptable: true, age: 9, breed: 'Cow', name: 'Real Human Boy')
     @pet_4 = @shelter_1.pets.create(adoptable: true, age: 4, breed: 'Rotweiler', name:'Rachet')
+
     @application_1 = @pet_1.applications.create(
       name: "Billy Mays",
       street_address:  "123 Main St",
@@ -61,7 +62,8 @@ RSpec.describe 'admin shelters' do
 
   it 'shows shelters with pending applications' do
     visit '/admin/shelters' 
-    expect(page).to have_content("#{@shelter_1.name}")
+    
+    expect(page).to have_content("Shelters with Pending applications:\n#{@shelter_1.name}")
   end
 
   #User Story 10
@@ -93,13 +95,18 @@ RSpec.describe 'admin shelters' do
   end
 end
 
+    #User Story 21
+    it "displays each shelter as a link to that shelter show page" do
+      @application_3 = @pet_2.applications.create!(name: "Alex Smith",street_address:  "123 Grove St",city: "Boulder",state: "CO",zip: "80012",description: "I like pets",status: "Pending")
+      visit "admin/shelters"
+      click_link("Aurora shelter")
+      expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
+
+      visit "admin/shelters"
+      click_link("RGV animal shelter")
+      expect(page).to have_current_path("/shelters/#{@shelter_2.id}")
+    end
+  end
 
 
-# User Story 20 Shelters with Pending Applications Listed Alphabetically
-
-# As a visitor
-# When I visit the admin shelter index ('/admin/shelters')
-# And I look in the section for shelters with pending applications
-# Then I see all those shelters are listed alphabetically
-
-
+end

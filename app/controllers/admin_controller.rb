@@ -36,4 +36,7 @@ class AdminController < ApplicationController
     redirect_to "/admin/applications/#{@application.id}"
 
   end
+
+
+
 end
