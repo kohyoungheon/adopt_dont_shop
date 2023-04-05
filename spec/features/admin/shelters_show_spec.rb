@@ -68,5 +68,37 @@ RSpec.describe 'admin shelters' do
       visit "admin/shelters/#{@shelter_3.id}"
       expect(page).to have_content("Count of pets that have been adopted: 0")
     end
+
+    #User Story 25
+    xit 'has action required section' do
+      visit "admin/shelters/#{@shelter_1.id}"
+      
+      expect(page).to have_content("Action Required")
+    end
+
+    xit 'has a list of all pets for this shelter that have a pending application' do
+      visit "admin/shelters/#{@shelter_1.id}"
+      
+      expect(page).to have_content("Bare-y Manilow")
+    end
+
+    #User Story 26
+    xit 'has a link to the admin application show page' do
+      visit "admin/shelters/#{@shelter_1.id}"
+      expect(page).to have_content("This Shelter's Applicaitons:")
+      click_link("Accept/Reject Application")
+    end
   end
 end
+
+# As a visitor
+# When I visit an admin shelter show page
+# Then I see a section titled "Action Required"
+# In that section, I see a list of all pets for this shelter that have a pending application and have not yet been marked "approved" or "rejected"
+
+# 26. Action Required Links to Application Show Page
+
+# As a visitor
+# When I visit an admin shelter show page
+# And I look in the "Action Required" section
+# Then next to each pet's name I see a link to the admin application show page where I can accept or reject the pet.
