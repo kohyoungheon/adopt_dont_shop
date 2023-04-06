@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 RSpec.describe 'admin shelters' do
   before(:each) do
     @shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
@@ -91,27 +91,15 @@ RSpec.describe 'admin shelters' do
 
     it 'has a list of all pets for this shelter that have a pending application' do
       visit "admin/shelters/#{@shelter_1.id}"
-      
       expect(page).to have_content("Bare-y Manilow")
     end
 
     #User Story 26
-    xit 'has a link to the admin application show page' do
+    it 'has a link to the admin application show page' do
       visit "admin/shelters/#{@shelter_1.id}"
-      expect(page).to have_content("This Shelter's Applicaitons:")
-      click_link("Accept/Reject Application")
+      click_link("Accept/Reject Application for Fun Guy")
+      save_and_open_page
+      expect(page).to have_content("Address: Laser Street, Star Wars City CA 92043")
     end
   end
 end
-
-# As a visitor
-# When I visit an admin shelter show page
-# Then I see a section titled "Action Required"
-# In that section, I see a list of all pets for this shelter that have a pending application and have not yet been marked "approved" or "rejected"
-
-# 26. Action Required Links to Application Show Page
-
-# As a visitor
-# When I visit an admin shelter show page
-# And I look in the "Action Required" section
-# Then next to each pet's name I see a link to the admin application show page where I can accept or reject the pet.

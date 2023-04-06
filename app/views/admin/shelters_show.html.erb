@@ -8,3 +8,8 @@
 </ul>
 
 <h3>Action Required</h3>
+
+<%ApplicationPet.pending_by_shelter(@shelter.id).each do |app_pet|%>
+<%=link_to "Accept/Reject Application for #{app_pet.pet.name}", "/admin/applications/#{app_pet.application.id}"%>
+<% end %>
+
