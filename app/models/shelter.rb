@@ -5,6 +5,7 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
   has_many :ShelterVeterinarians
+  has_many :application_pets, through: :pets
 
   def self.order_alpha
     find_by_sql("SELECT shelters.* FROM shelters ORDER BY shelters.name desc")
@@ -65,5 +66,9 @@ class Shelter < ApplicationRecord
   # def self.sort_alphabetically
   #   Shelter.order(:)
   # end
+
+  def app_pets_pending
+    application_pets.where(approved: [nil, ""])
+  end
 end
 

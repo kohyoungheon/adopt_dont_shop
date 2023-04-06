@@ -18,4 +18,7 @@ class ApplicationPet < ApplicationRecord
     applicationpets
   end
 
+  def self.pending_by_shelter(shelter_id)
+    joins(:pet).where(approved: [nil, ""]).where("shelter_id = '#{shelter_id}'")
+  end
 end
