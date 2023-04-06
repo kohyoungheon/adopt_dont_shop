@@ -32,26 +32,31 @@ RSpec.describe 'admin/applications/:id' do
   describe "When i visit admin/applications/:id" do
     it "Displays 'Approve' button next to each added pet" do
       visit "/admin/applications/#{@application_1.id}" 
-      expect(page).to have_content("Pets:\nBare-y Manilow\nMr. Pirate")
-      expect(page).to have_selector(:button, "Approve Bare-y Manilow")
-      expect(page).to have_selector(:button, "Approve Mr. Pirate")
+      within('li#admin_pets') do
+        expect(page).to have_content("Pets:\nBare-y Manilow\nMr. Pirate")
+        expect(page).to have_selector(:button, "Approve Bare-y Manilow")
+        expect(page).to have_selector(:button, "Approve Mr. Pirate")
+      end
     end
     
     it "Clicking it redirects me to same page" do
       visit "/admin/applications/#{@application_1.id}" 
-      expect(page).to have_selector(:button, "Approve Bare-y Manilow")
-      expect(page).to have_selector(:button, "Approve Mr. Pirate")
-      click_button("Approve Bare-y Manilow")
+      within('li#admin_pets') do
+        expect(page).to have_selector(:button, "Approve Bare-y Manilow")
+        expect(page).to have_selector(:button, "Approve Mr. Pirate")
+        click_button("Approve Bare-y Manilow")
+      end
       expect(page).to have_current_path("/admin/applications/#{@application_1.id}")
     end
     it "Indicates that pet has been approved and button is gone" do
       visit "/admin/applications/#{@application_1.id}" 
       click_button("Approve Bare-y Manilow")
       expect(page).to have_current_path("/admin/applications/#{@application_1.id}")
-
-      expect(page).to have_selector(:button, "Approve Mr. Pirate")
-      expect(page).to_not have_selector(:button, "Approve Bare-y Manilow")
-      expect(page).to have_content("Pets: Bare-y Manilow:Approved true\nMr. Pirate")
+      within('li#admin_pets') do
+        expect(page).to have_selector(:button, "Approve Mr. Pirate")
+        expect(page).to_not have_selector(:button, "Approve Bare-y Manilow")
+        expect(page).to have_content("Pets: Bare-y Manilow:Approved true\nMr. Pirate")
+      end
     end
   end
 

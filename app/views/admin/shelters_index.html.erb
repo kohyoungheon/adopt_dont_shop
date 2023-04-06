@@ -1,5 +1,5 @@
 <h1>All Shelters(Admin) Reverse Alphabetical Order</h1>
-<ul>
+<ul id = "admin_shelter">
 <% @shelters.each do |s| %>
 <li>ID: <%= s.id %></li>
 <li>Foster Program: <%= s.foster_program %></li>
@@ -9,6 +9,7 @@
 <p>---------------------------</p>
 <% end %>
 </ul>
+<div id="admin_pending_shelter">
 <h2>Shelters with Pending applications:</h2> 
 
 <p>
@@ -18,3 +19,4 @@
   <% end %>
 <% end %>
 </p>
+</div>

@@ -1,6 +1,7 @@
 <h1>Create an Application</h1>
 <ul>
 <%= form_with url: "/applications", method: :post, local: true do |f| %>
+<div id ="create-app-form">
   <li><%= f.label :name%></li>
   <li><%= f.text_field :name %></li>
   <li><%= f.label :street_address %></li>
@@ -14,5 +15,6 @@
   <li><%= f.label :description %></li>
   <li><%= f.text_field :description %></li>
   <li><%= f.submit 'Create Application'%></li>
+</div>
 <% end %>
 </ul>

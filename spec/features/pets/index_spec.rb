@@ -86,57 +86,69 @@ RSpec.describe 'the pets index' do
   describe "When I visit /pets," do
     it "displays a link to 'Start an Application'" do
       visit "/pets"
-      expect(page).to have_selector(:button, "Start an Application")
+      within ("#pet-index") do
+        expect(page).to have_selector(:button, "Start an Application")
+      end
     end
 
     it "clicking the link redirects me to /applications/new" do
       visit "/pets"
-      click_on("Start an Application")
-      expect(page).to have_current_path("/applications/new")
+      within ("#pet-index") do
+        click_on("Start an Application")
+        expect(page).to have_current_path("/applications/new")
+      end
     end
   
     it "displays a form with space for attributes" do
       visit "/applications/new"
-      expect(page).to have_content("Name")
-      expect(page).to have_field(:name)
-      expect(page).to have_content("Street address")
-      expect(page).to have_field(:street_address)
-      expect(page).to have_content("City")
-      expect(page).to have_field(:city)
-      expect(page).to have_content("State")
-      expect(page).to have_field(:state)
-      expect(page).to have_content("Zip")
-      expect(page).to have_field(:zip)
-      expect(page).to have_content("Description")
-      expect(page).to have_field(:description)
-      expect(page).to have_selector(:button, "Create Application")
+      within ("#create-app-form") do
+        expect(page).to have_content("Name")
+        expect(page).to have_field(:name)
+        expect(page).to have_content("Street address")
+        expect(page).to have_field(:street_address)
+        expect(page).to have_content("City")
+        expect(page).to have_field(:city)
+        expect(page).to have_content("State")
+        expect(page).to have_field(:state)
+        expect(page).to have_content("Zip")
+        expect(page).to have_field(:zip)
+        expect(page).to have_content("Description")
+        expect(page).to have_field(:description)
+        expect(page).to have_selector(:button, "Create Application")
+      end
     end
     it "filling and submitting the form takes me to /applications/:id" do
       visit "/applications/new"
-      fill_in(:name, :with => 'John')
-      fill_in(:street_address, :with => '1234 F. Street')
-      fill_in(:city, :with => 'Los Angeles')
-      fill_in(:state, :with => 'California')
-      fill_in(:zip, :with => '80005')
-      fill_in(:description, :with => 'I am the best pet owner')
-      click_on("Create Application")
+      within ("#create-app-form") do
+        fill_in(:name, :with => 'John')
+        fill_in(:street_address, :with => '1234 F. Street')
+        fill_in(:city, :with => 'Los Angeles')
+        fill_in(:state, :with => 'California')
+        fill_in(:zip, :with => '80005')
+        fill_in(:description, :with => 'I am the best pet owner')
+        click_on("Create Application")
+      end
       id = Application.last.id
       expect(page).to have_current_path("/applications/#{id}")
     end
     it "displays submitted info with an 'In Progress' indicator" do
       visit "/applications/new"
-      fill_in(:name, :with => 'John')
-      fill_in(:street_address, :with => '1234 F. Street')
-      fill_in(:city, :with => 'Los Angeles')
-      fill_in(:state, :with => 'California')
-      fill_in(:zip, :with => '80005')
-      fill_in(:description, :with => 'I am the best pet owner')
-      click_on("Create Application")
+      within ("#create-app-form") do
+        fill_in(:name, :with => 'John')
+        fill_in(:street_address, :with => '1234 F. Street')
+        fill_in(:city, :with => 'Los Angeles')
+        fill_in(:state, :with => 'California')
+        fill_in(:zip, :with => '80005')
+        fill_in(:description, :with => 'I am the best pet owner')
+        click_on("Create Application")
+      end
       id = Application.last.id
       expect(page).to have_current_path("/applications/#{id}")
-      expect(page).to have_content("Name: John")
-      expect(page).to have_content("Address: 1234 F. Street")
-      expect(page).to have_content("App Status: In Progress")
+      within('#app-show') do
+        expect(page).to have_content("Name: John")
+        expect(page).to have_content("Address: 1234 F. Street")
+        expect(page).to have_content("App Status: In Progress")
+      end
     end
   end
 end

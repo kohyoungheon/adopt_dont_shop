@@ -46,9 +46,10 @@ RSpec.describe 'admin shelters' do
   describe "Admin Shelters Show Page" do
     it "has the shelters name and full address" do
       visit "admin/shelters/#{@shelter_1.id}"
-
-      expect(page).to have_content("#{@shelter_1.name}")
-      expect(page).to have_content("#{@shelter_1.city}")
+      within ('#admin-shelter-info') do
+        expect(page).to have_content("#{@shelter_1.name}")
+        expect(page).to have_content("#{@shelter_1.city}")
+      end
     end
   end
 
@@ -56,30 +57,48 @@ RSpec.describe 'admin shelters' do
     #User Story 22
     it "displays a section for statistics" do
       visit "admin/shelters/#{@shelter_1.id}"
-      expect(page).to have_content("Statistics:")
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Statistics:")
+      end
     end
 
     it "displays average age of all adoptable pets for that shelter" do
       visit "admin/shelters/#{@shelter_1.id}"
-      expect(page).to have_content("Average age of adoptable pets: 2.75")
+
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Average age of adoptable pets: 2.75")
+      end
+
       visit "admin/shelters/#{@shelter_3.id}"
-      expect(page).to have_content("Average age of adoptable pets: 8")
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Average age of adoptable pets: 8")
+      end
     end
 
     #User Story 23
     it "displays a count of adoptable pets for that shelter" do
       visit "admin/shelters/#{@shelter_1.id}"
-      expect(page).to have_content("Count of adoptable pets: 4")
+
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Count of adoptable pets: 4")
+      end
+      
       visit "admin/shelters/#{@shelter_3.id}"
-      expect(page).to have_content("Count of adoptable pets: 1")
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Count of adoptable pets: 1")
+      end
     end
     #User Story 24
     it "displays the count of adopted pets from that shelter" do
       @shelter_1.pets.create!(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: false)
       visit "admin/shelters/#{@shelter_1.id}"
-      expect(page).to have_content("Count of pets that have been adopted: 1")
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Count of pets that have been adopted: 1")
+      end
       visit "admin/shelters/#{@shelter_3.id}"
-      expect(page).to have_content("Count of pets that have been adopted: 0")
+      within ('#admin-shelter-stats') do
+        expect(page).to have_content("Count of pets that have been adopted: 0")
+      end
     end
 
     #User Story 25

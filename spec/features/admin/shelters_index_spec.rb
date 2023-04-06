@@ -61,17 +61,20 @@ RSpec.describe 'admin shelters' do
   end
 
   it 'shows shelters with pending applications' do
-    visit '/admin/shelters' 
-    
-    expect(page).to have_content("Shelters with Pending applications:\n#{@shelter_1.name}")
+    visit '/admin/shelters'
+    within('#admin_pending_shelter') do
+      expect(page).to have_content("Shelters with Pending applications:\n#{@shelter_1.name}")
+    end
   end
 
   #User Story 10
   describe "When i visit /admin/shelters" do
     it "displays all shelters in reverse alphabetical order" do
       visit '/admin/shelters' 
-      expect(@shelter_2.name).to appear_before(@shelter_3.name)
-      expect(@shelter_3.name).to appear_before(@shelter_1.name)
+      within('#admin_shelter') do
+        expect(@shelter_2.name).to appear_before(@shelter_3.name)
+        expect(@shelter_3.name).to appear_before(@shelter_1.name)
+      end
     end
   end
 
@@ -79,9 +82,8 @@ RSpec.describe 'admin shelters' do
   describe "Admin Shelters Show Page" do
     it "has the shelters name and full address" do
       visit "admin/shelters/#{@shelter_1.id}"
-
-      expect(page).to have_content("#{@shelter_1.name}")
-      expect(page).to have_content("#{@shelter_1.city}")
+        expect(page).to have_content("#{@shelter_1.name}")
+        expect(page).to have_content("#{@shelter_1.city}")
     end
   end
 
@@ -89,8 +91,9 @@ RSpec.describe 'admin shelters' do
   describe "Admin Shelters Show Page" do
     it 'lists shelters alphabetically and distinctly' do
       visit "/admin/shelters"
-      
-      expect(page).to have_content("Aurora shelter Fancy pets of Colorado RGV animal shelter")
+      within('#admin_pending_shelter') do
+        expect(page).to have_content("Aurora shelter Fancy pets of Colorado RGV animal shelter")
+      end
     end
   end
 

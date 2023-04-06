@@ -1,5 +1,8 @@
+<div id ="admin-shelter-info">
 <%= @shelters.get_name(@shelter.id)%>
 <%= @shelters.get_city(@shelter.id)%>
+</div>
+<div id="admin-shelter-stats">
 <h3>Statistics:</h3>
 <ul>
 <li>Average age of adoptable pets: <%= @average_age %></li>
@@ -7,9 +10,10 @@
 <li>Count of pets that have been adopted: <%= @adopted_pets %></li>
 </ul>
 
+
 <h3>Action Required</h3>
 
 <%ApplicationPet.pending_by_shelter(@shelter.id).each do |app_pet|%>
 <%=link_to "Accept/Reject Application for #{app_pet.pet.name}", "/admin/applications/#{app_pet.application.id}"%>
 <% end %>
-
+</div>

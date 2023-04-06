@@ -1,4 +1,6 @@
+<div id="app-index">
 <h1>All Applications (Ease of Access)</h1>
 <% @applications.each do |a| %>
 <%=link_to "#{a.id}", "/applications/#{a.id}"%>
 <% end %>
+</div>
